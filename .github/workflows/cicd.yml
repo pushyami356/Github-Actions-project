@@ -28,17 +28,8 @@ jobs:
     - name: Check Trivy
       run: |
         trivy --version
-           
-    - name: Trivy FS Scan
-      run: |
-       - name: Trivy FS Scan
-         run: |
-           trivy fs \
-           --severity HIGH,CRITICAL \
-           --exit-code 1 \
-           --format table \
-           .      
-
+        trivy fs --severity HIGH,CRITICAL --exit-code 1 .
+              
     - name: Gitleaks Installation
       run: sudo apt install gitleaks -y
     - name: Gitleaks Code Scan
