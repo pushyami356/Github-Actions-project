@@ -30,16 +30,16 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y wget apt-transport-https gnupg lsb-release
 
-        sudo mkdir -p /etc/apt/keyrings
+        wget -qO- https://aquasecurity.github.io/trivy-repo/deb/public.key \
+        | sudo gpg --dearmor --batch --yes -o /usr/share/keyrings/trivy.gpg
 
-        wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | \
-        sudo gpg --dearmor -o /etc/apt/keyrings/trivy.gpg
+        echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" \
+       | sudo tee /etc/apt/sources.list.d/trivy.list
 
-        echo "deb [signed-by=/etc/apt/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | \
-        sudo tee /etc/apt/sources.list.d/trivy.list
+       sudo apt-get update
+       sudo apt-get install -y trivy
 
-        sudo apt-get update
-        sudo apt-get install -y trivy
+       trivy --version
        
 
     - name: Trivy FS Scan
