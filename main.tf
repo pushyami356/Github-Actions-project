@@ -14,7 +14,7 @@ resource "aws_subnet" "eks_subnet" {
   count = 2
   vpc_id                  = aws_vpc.eks_vpc.id
   cidr_block              = cidrsubnet(aws_vpc.eks_vpc.cidr_block, 8, count.index)
-  availability_zone       = element(["eu-north-1", "eu-west-1"], count.index)
+  availability_zone       = element(["eu-north-1a", "eu-north-1b"], count.index)
   map_public_ip_on_launch = true
 
   tags = {
