@@ -78,7 +78,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
 
-  buils_docker_image_and_push:
+  build_docker_image_and_push:
     runs-on: self-hosted
     needs: build_project_and_sonar_scan
     steps:
@@ -108,7 +108,7 @@ jobs:
 
   deploy_to_kubernetes:
     runs-on: self-hosted
-    needs: buils_docker_image_and_push
+    needs: build_docker_image_and_push
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
